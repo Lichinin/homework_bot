@@ -3,11 +3,12 @@ import os
 import sys
 import time
 from http import HTTPStatus
-import exceptions
 
 import requests
 import telegram
 from dotenv import load_dotenv
+
+import exceptions
 
 load_dotenv()
 
@@ -40,9 +41,7 @@ def send_message(bot, message):
             f'Сообщение не удалось отправить: {error}',
             exc_info=True
         )
-        raise exceptions.SendMessageError from error(
-            f'Сообщение не удалось отправить: {error}'
-        )
+        raise exceptions.SendMessageError from error
 
 
 def get_api_answer(timestamp):
@@ -116,6 +115,13 @@ def main():
                 message = parse_status(homework)
                 send_message(bot, message)
                 timestamp = response['current_date']
+
+        except exceptions.SendMessageError:
+            pass
+            # logging.error(
+            #     f'Сообщение не удалось отправить: {error}',
+            #     exc_info=True
+            # )
 
         except Exception as error:
             logging.exception(error)
