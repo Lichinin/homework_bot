@@ -118,10 +118,6 @@ def main():
 
         except exceptions.SendMessageError:
             pass
-            # logging.error(
-            #     f'Сообщение не удалось отправить: {error}',
-            #     exc_info=True
-            # )
 
         except Exception as error:
             logging.exception(error)
